@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Loader2, SearchCheck, ShieldQuestion } from 'lucide-react';
+import { Loader2, SearchCheck, ShieldQuestion, Info, Target } from 'lucide-react'; // Added Info, Target
 import { analyzeTransactionData, type AnalyzeTransactionDataOutput } from '@/ai/flows/analyze-transaction-data';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -77,11 +77,10 @@ export function FraudDetectionTool() {
   };
 
   return (
-    // neon-glow-secondary and border-secondary/50 might not be defined in reverted globals.css
-    <Card className="shadow-xl neon-glow-secondary border-secondary/50">
+    <Card className="shadow-xl border-accent/30 backdrop-blur-md bg-card/70">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-2xl">
-          <ShieldQuestion className="h-7 w-7 text-secondary" />
+        <CardTitle className="flex items-center gap-2 text-2xl font-bold">
+          <ShieldQuestion className="h-7 w-7 text-accent filter drop-shadow(0 0 4px hsl(var(--accent)/0.8))" />
           Fraud Detection AI
         </CardTitle>
         <CardDescription className="text-muted-foreground">Analyze transaction data for suspicious patterns using GenAI.</CardDescription>
@@ -94,11 +93,11 @@ export function FraudDetectionTool() {
               name="transactionData"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-foreground/90">Transaction Data (JSON format)</FormLabel>
+                  <FormLabel className="text-foreground/90 font-medium">Transaction Data (JSON format)</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder={`Enter transaction data in JSON format. Example:\n${JSON.stringify(exampleTransaction, null, 2)}`}
-                      className="min-h-[150px] font-mono text-xs bg-input border-border/50 focus:border-accent focus:ring-accent"
+                      className="min-h-[150px] font-mono text-xs bg-input/70 border-border/50 focus:border-accent focus:ring-accent backdrop-blur-sm"
                       {...field}
                     />
                   </FormControl>
@@ -108,8 +107,7 @@ export function FraudDetectionTool() {
             />
           </CardContent>
           <CardFooter>
-            {/* analyze-button class might not be defined in reverted globals.css */}
-            <Button type="submit" disabled={isLoading} className="analyze-button w-full text-lg py-3">
+            <Button type="submit" disabled={isLoading} className="w-full text-lg py-3 bg-accent hover:bg-accent-light text-accent-foreground focus:ring-accent">
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -126,23 +124,22 @@ export function FraudDetectionTool() {
         </form>
       </Form>
       {analysisResult && (
-        <CardContent className="mt-4">
+        <CardContent className="mt-6"> {/* Increased margin for better separation */}
           <Alert 
             variant={analysisResult.isSuspicious ? "destructive" : "default"} 
-            // neon-glow classes might not be defined in reverted globals.css
             className={cn(
-              "border-2",
+              "border-2 rounded-lg p-5", // Ensure padding and rounded corners
               analysisResult.isSuspicious 
-              ? "border-destructive/70 text-destructive neon-glow-destructive bg-destructive/10" 
-              : "border-chart-3/70 text-chart-3 neon-glow-secondary bg-chart-3/10" 
+              ? "border-destructive/70 text-destructive bg-destructive/10 backdrop-blur-sm shadow-[0_0_15px_hsl(var(--destructive)/0.3)]" 
+              : "border-primary/70 text-primary bg-primary/10 backdrop-blur-sm shadow-[0_0_15px_hsl(var(--primary)/0.3)]" 
             )}
           >
              <AlertTitle className="font-bold flex items-center gap-2 text-lg">
               {analysisResult.isSuspicious ? 'Threat Detected!' : 'System Nominal'}
             </AlertTitle>
-            <AlertDescription className="mt-2 space-y-1 text-base">
-              <p><strong>Intel:</strong> {analysisResult.reason}</p>
-              <p><strong>Certainty Index:</strong> {(analysisResult.confidenceScore * 100).toFixed(1)}%</p>
+            <AlertDescription className="mt-3 space-y-2 text-base"> {/* Increased spacing */}
+              <p className="flex items-center gap-2"><Info size={18} className="text-current/80" /> <strong>Intel:</strong> {analysisResult.reason}</p>
+              <p className="flex items-center gap-2"><Target size={18} className="text-current/80" /> <strong>Certainty Index:</strong> {(analysisResult.confidenceScore * 100).toFixed(1)}%</p>
             </AlertDescription>
           </Alert>
         </CardContent>

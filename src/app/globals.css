@@ -9,13 +9,13 @@ body {
 @layer base {
   :root {
     /* Greys, Black, White */
-    --background: 0 0% 8%; /* Almost Black */
+    --background: 220 15% 6%; /* Darker, slightly cool blue/grey */
     --foreground: 0 0% 95%; /* White / Very Light Grey */
 
-    --card: 0 0% 12%;    /* Dark Grey */
+    --card: 220 15% 10% / 0.6; /* Dark Grey for cards with alpha for frosted glass */
     --card-foreground: 0 0% 90%; /* Light Grey */
 
-    --popover: 0 0% 10%; /* Darker Grey for Popovers */
+    --popover: 220 15% 8%; /* Darker Grey for Popovers */
     --popover-foreground: 0 0% 90%;
 
     --muted: 0 0% 25%; /* Medium Dark Grey */
@@ -27,14 +27,22 @@ body {
     /* Green */
     --primary: 145 80% 42%;  /* Vibrant Green */
     --primary-foreground: 0 0% 100%; /* White */
+    --primary-light: 145 70% 55%;
+    --primary-dark: 145 90% 35%;
 
     /* Orange */
     --secondary: 30 100% 55%; /* Vibrant Orange */
     --secondary-foreground: 0 0% 10%; /* Dark Grey/Black for contrast */
 
-    /* Accent - Orange */
+    /* Accent - Orange (keeping as main accent for now) */
     --accent: 30 100% 55%;   /* Orange */
     --accent-foreground: 0 0% 10%; /* Dark Grey/Black */
+    --accent-light: 30 90% 65%;
+
+    /* New Accent - Cool Blue */
+    --accent-secondary: 210 80% 58%; /* Cool Blue */
+    --accent-secondary-foreground: 0 0% 100%; /* White */
+
 
     /* Destructive - Keeping existing red as it's a standard convention */
     --destructive: 0 90% 60%; /* Vibrant Red */
@@ -46,17 +54,17 @@ body {
     
     --ring: 145 80% 48%;    /* Green for focus ring (slightly lighter than primary) */
 
-    --radius: 0.75rem;
+    --radius: 0.5rem; /* Slightly reduced for a sharper look */
 
     /* Chart Colors */
     --chart-1: 145 80% 42%; /* Green (Primary) */
-    --chart-2: 30 100% 55%; /* Orange (Secondary) */
-    --chart-3: 145 70% 55%; /* Lighter/Softer Green */
-    --chart-4: 30 90% 65%;  /* Lighter/Softer Orange */
+    --chart-2: 30 100% 55%; /* Orange (Secondary/Accent) */
+    --chart-3: 210 80% 58%; /* Cool Blue (Accent Secondary) */
+    --chart-4: 145 70% 55%;  /* Lighter/Softer Green */
     --chart-5: 0 0% 50%;    /* Medium Grey */
 
     /* Sidebar colors - will derive from the main theme */
-    --sidebar-background: 0 0% 10%; 
+    --sidebar-background: 220 15% 8%; 
     --sidebar-foreground: 0 0% 95%;
     --sidebar-primary: 145 80% 42%; /* Green */
     --sidebar-primary-foreground: 0 0% 100%;
@@ -73,8 +81,53 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    background-image: linear-gradient(to bottom right, hsl(var(--background)), hsl(var(--background) / 0.95));
   }
   .dark {
     /* All variables are already defined for a dark theme by default in :root */
+  }
+}
+
+@layer components {
+  .text-glow-primary {
+    text-shadow: 0 0 8px hsl(var(--primary) / 0.7), 0 0 12px hsl(var(--primary) / 0.5);
+  }
+  .text-glow-accent {
+    text-shadow: 0 0 8px hsl(var(--accent) / 0.7), 0 0 12px hsl(var(--accent) / 0.5);
+  }
+   .text-glow-accent-secondary {
+    text-shadow: 0 0 8px hsl(var(--accent-secondary) / 0.7), 0 0 12px hsl(var(--accent-secondary) / 0.5);
+  }
+
+  .risk-pulse-low {
+    background-color: hsl(var(--chart-1) / 0.3);
+    border: 2px solid hsl(var(--chart-1));
+    box-shadow: 0 0 15px hsl(var(--chart-1) / 0.7), 0 0 25px hsl(var(--chart-1) / 0.5);
+    animation: pulse-low 2s infinite;
+  }
+  .risk-pulse-medium {
+    background-color: hsl(var(--warning) / 0.3);
+    border: 2px solid hsl(var(--warning));
+    box-shadow: 0 0 15px hsl(var(--warning) / 0.7), 0 0 25px hsl(var(--warning) / 0.5);
+    animation: pulse-medium 1.5s infinite;
+  }
+  .risk-pulse-high {
+    background-color: hsl(var(--destructive) / 0.3);
+    border: 2px solid hsl(var(--destructive));
+    box-shadow: 0 0 15px hsl(var(--destructive) / 0.7), 0 0 25px hsl(var(--destructive) / 0.5);
+    animation: pulse-high 1s infinite;
+  }
+
+  @keyframes pulse-low {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.05); }
+  }
+  @keyframes pulse-medium {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+  }
+  @keyframes pulse-high {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.15); }
   }
 }

@@ -7,11 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ShieldAlert } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// riskConfig uses CSS classes that might not be defined in reverted globals.css
-const riskConfig: Record<RiskLevel, { className: string; text: string; cardGlow: string }> = {
-  low: { className: 'risk-pulse-low', text: 'Low Risk', cardGlow: 'neon-glow-accent' },
-  medium: { className: 'risk-pulse-medium', text: 'Medium Risk', cardGlow: 'neon-glow-warning' },
-  high: { className: 'risk-pulse-high', text: 'High Risk', cardGlow: 'neon-glow-primary' },
+const riskConfig: Record<RiskLevel, { pulseClass: string; text: string; cardGlowVar: string }> = {
+  low: { pulseClass: 'risk-pulse-low', text: 'Low Risk', cardGlowVar: '--primary' }, // Green
+  medium: { pulseClass: 'risk-pulse-medium', text: 'Medium Risk', cardGlowVar: '--warning' }, // Orange
+  high: { pulseClass: 'risk-pulse-high', text: 'High Risk', cardGlowVar: '--destructive' }, // Red
 };
 
 export function RiskPulseIndicator() {
@@ -29,22 +28,24 @@ export function RiskPulseIndicator() {
   }, []);
 
   const activeConfig = riskConfig[currentRisk];
+  const cardGlowStyle = {
+    boxShadow: `0 0 12px hsl(var(${activeConfig.cardGlowVar}) / 0.5), 0 0 18px hsl(var(${activeConfig.cardGlowVar}) / 0.3)`,
+    borderColor: `hsl(var(${activeConfig.cardGlowVar}) / 0.6)`
+  } as React.CSSProperties;
 
   return (
-    // activeConfig.cardGlow (neon-glow-*) might not be defined in reverted globals.css
-    <Card className={cn("shadow-lg border-transparent", activeConfig.cardGlow)}>
+    <Card style={cardGlowStyle} className={cn("shadow-lg border backdrop-blur-md bg-card/70")}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-foreground/80">Threat Matrix</CardTitle>
-         <ShieldAlert className="h-4 w-4 text-muted-foreground" />
+        <CardTitle className="text-base font-medium text-foreground/80">Threat Matrix</CardTitle>
+         <ShieldAlert className="h-5 w-5 text-muted-foreground filter drop-shadow(0 0 2px hsl(var(--muted-foreground)/0.5))" />
       </CardHeader>
       <CardContent className="flex flex-col items-center justify-center space-y-3 pt-4">
-        {/* activeConfig.className (risk-pulse-*) might not be defined in reverted globals.css */}
-        <div className={cn("w-24 h-24 rounded-full flex items-center justify-center", activeConfig.className)}>
+        <div className={cn("w-24 h-24 rounded-full flex items-center justify-center", activeConfig.pulseClass)}>
           <div className="w-20 h-20 rounded-full bg-background/80 flex items-center justify-center border-2 border-current">
              <span className="text-md font-semibold text-foreground">{activeConfig.text}</span>
           </div>
         </div>
-        <p className="text-xs text-muted-foreground">Current threat assessment.</p>
+        <p className="text-xs text-muted-foreground">Current system threat assessment.</p>
       </CardContent>
     </Card>
   );

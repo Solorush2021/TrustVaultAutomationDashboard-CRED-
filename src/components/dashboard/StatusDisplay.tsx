@@ -7,10 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle2, XCircle, Loader2, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const statusConfig: Record<TransactionStatus, { icon: React.ElementType; colorClass: string; text: string; glowClass: string }> = {
-  success: { icon: CheckCircle2, colorClass: 'text-[hsl(var(--chart-3))]', text: 'System: Nominal', glowClass: 'neon-glow-secondary' }, // chart-3 (green)
-  failed: { icon: XCircle, colorClass: 'text-destructive', text: 'System: Critical Alert', glowClass: 'neon-glow-destructive' },
-  pending: { icon: Loader2, colorClass: 'text-warning', text: 'System: Standby', glowClass: 'neon-glow-warning' },
+const statusConfig: Record<TransactionStatus, { icon: React.ElementType; colorClass: string; text: string; glowClassVar: string }> = {
+  success: { icon: CheckCircle2, colorClass: 'text-primary', text: 'System: Nominal', glowClassVar: '--primary' },
+  failed: { icon: XCircle, colorClass: 'text-destructive', text: 'System: Critical Alert', glowClassVar: '--destructive' },
+  pending: { icon: Loader2, colorClass: 'text-warning', text: 'System: Standby', glowClassVar: '--warning' },
 };
 
 export function StatusDisplay() {
@@ -29,22 +29,33 @@ export function StatusDisplay() {
 
   const IconComponent = statusConfig[currentStatus].icon;
   const activeConfig = statusConfig[currentStatus];
+  const glowStyle = {
+    boxShadow: `0 0 12px hsl(var(${activeConfig.glowClassVar}) / 0.6), 0 0 18px hsl(var(${activeConfig.glowClassVar}) / 0.4)`,
+    borderColor: `hsl(var(${activeConfig.glowClassVar}) / 0.7)`
+  } as React.CSSProperties;
+
 
   return (
-    // activeConfig.glowClass (neon-glow-*) might not be defined in reverted globals.css
-    <Card className={cn("shadow-lg border-transparent", activeConfig.glowClass)}>
+    <Card style={glowStyle} className={cn("shadow-lg border backdrop-blur-md bg-card/70")}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-foreground/80">Network Integrity</CardTitle>
-        <Zap className="h-4 w-4 text-muted-foreground" />
+        <CardTitle className="text-base font-medium text-foreground/80">Network Integrity</CardTitle>
+        <Zap className="h-5 w-5 text-muted-foreground filter drop-shadow(0 0 2px hsl(var(--muted-foreground)/0.5))" />
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-4">
         <div className="flex items-center space-x-3">
-          <IconComponent className={cn("h-10 w-10", activeConfig.colorClass, currentStatus === 'pending' && 'animate-spin')} />
-          <span className={cn("text-2xl font-semibold", activeConfig.colorClass)}>
+          <IconComponent 
+            className={cn(
+              "h-10 w-10", 
+              activeConfig.colorClass, 
+              currentStatus === 'pending' && 'animate-spin',
+              `filter drop-shadow(0 0 5px hsl(var(${activeConfig.glowClassVar})/0.8))`
+            )} 
+          />
+          <span className={cn("text-2xl font-semibold", activeConfig.colorClass, `text-glow-${activeConfig.glowClassVar === '--primary' ? 'primary' : activeConfig.glowClassVar === '--destructive' ? 'destructive' : 'warning'}`)}>
             {activeConfig.text}
           </span>
         </div>
-        <p className="text-xs text-muted-foreground pt-1">Real-time operational uplink.</p>
+        <p className="text-xs text-muted-foreground pt-1.5">Real-time operational uplink.</p>
       </CardContent>
     </Card>
   );
