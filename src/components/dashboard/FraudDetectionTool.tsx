@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -12,6 +13,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Loader2, SearchCheck, ShieldQuestion } from 'lucide-react';
 import { analyzeTransactionData, type AnalyzeTransactionDataOutput } from '@/ai/flows/analyze-transaction-data';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 const formSchema = z.object({
   transactionData: z.string().min(10, { message: 'Transaction data must be at least 10 characters.' })
@@ -33,10 +35,10 @@ const exampleTransaction = {
   currency: "USD",
   timestamp: new Date().toISOString(),
   type: "debit",
-  merchant: "OnlineRetailer Inc.",
-  location: "San Francisco, CA",
-  userDevice: "Mobile App iOS 15.4",
-  ipAddress: "192.168.1.100"
+  merchant: "CyberRetailer X",
+  location: "Neo-Tokyo, Sector 7",
+  userDevice: "HoloLens v3.2",
+  ipAddress: "2077.168.1.100"
 };
 
 export function FraudDetectionTool() {
@@ -60,6 +62,7 @@ export function FraudDetectionTool() {
       toast({
         title: "Analysis Complete",
         description: "Transaction data has been analyzed.",
+        variant: result.isSuspicious ? "destructive" : "default",
       });
     } catch (error) {
       console.error("Fraud detection error:", error);
@@ -74,13 +77,13 @@ export function FraudDetectionTool() {
   };
 
   return (
-    <Card className="shadow-lg border-primary/20">
+    <Card className="shadow-xl neon-glow-secondary border-secondary/50">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <ShieldQuestion className="h-6 w-6 text-primary" />
+        <CardTitle className="flex items-center gap-2 text-2xl">
+          <ShieldQuestion className="h-7 w-7 text-secondary" />
           Fraud Detection AI
         </CardTitle>
-        <CardDescription>Analyze transaction data for suspicious patterns using GenAI.</CardDescription>
+        <CardDescription className="text-muted-foreground">Analyze transaction data for suspicious patterns using GenAI.</CardDescription>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -90,11 +93,11 @@ export function FraudDetectionTool() {
               name="transactionData"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Transaction Data (JSON format)</FormLabel>
+                  <FormLabel className="text-foreground/90">Transaction Data (JSON format)</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder={`Enter transaction data in JSON format. Example:\n${JSON.stringify(exampleTransaction, null, 2)}`}
-                      className="min-h-[150px] font-mono text-xs bg-input focus:border-accent" /* Updated bg-background/70 to bg-input for theme consistency */
+                      className="min-h-[150px] font-mono text-xs bg-input border-border/50 focus:border-accent focus:ring-accent"
                       {...field}
                     />
                   </FormControl>
@@ -104,16 +107,16 @@ export function FraudDetectionTool() {
             />
           </CardContent>
           <CardFooter>
-            <Button type="submit" disabled={isLoading} className="bg-primary hover:bg-primary/80 text-primary-foreground w-full">
+            <Button type="submit" disabled={isLoading} className="analyze-button w-full text-lg py-3">
               {isLoading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Analyzing...
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Analyzing Grid...
                 </>
               ) : (
                 <>
-                  <SearchCheck className="mr-2 h-4 w-4" />
-                  Analyze Transaction
+                  <SearchCheck className="mr-2 h-5 w-5" />
+                  Scan Transaction Matrix
                 </>
               )}
             </Button>
@@ -121,21 +124,22 @@ export function FraudDetectionTool() {
         </form>
       </Form>
       {analysisResult && (
-        <CardContent>
+        <CardContent className="mt-4">
           <Alert 
             variant={analysisResult.isSuspicious ? "destructive" : "default"} 
-            className={
+            className={cn(
+              "border-2",
               analysisResult.isSuspicious 
-              ? "border-destructive/50 text-destructive" 
-              : "border-secondary/50 text-secondary" /* Updated green to secondary */
-            }
+              ? "border-destructive/70 text-destructive neon-glow-destructive bg-destructive/10" 
+              : "border-chart-3/70 text-chart-3 neon-glow-secondary bg-chart-3/10" // Using chart-3 (green) for non-suspicious
+            )}
           >
-             <AlertTitle className="font-bold flex items-center gap-2">
-              {analysisResult.isSuspicious ? 'Suspicious Transaction' : 'Transaction Appears Normal'}
+             <AlertTitle className="font-bold flex items-center gap-2 text-lg">
+              {analysisResult.isSuspicious ? 'Threat Detected!' : 'System Nominal'}
             </AlertTitle>
-            <AlertDescription className="mt-2 space-y-1">
-              <p><strong>Reason:</strong> {analysisResult.reason}</p>
-              <p><strong>Confidence Score:</strong> {(analysisResult.confidenceScore * 100).toFixed(1)}%</p>
+            <AlertDescription className="mt-2 space-y-1 text-base">
+              <p><strong>Intel:</strong> {analysisResult.reason}</p>
+              <p><strong>Certainty Index:</strong> {(analysisResult.confidenceScore * 100).toFixed(1)}%</p>
             </AlertDescription>
           </Alert>
         </CardContent>

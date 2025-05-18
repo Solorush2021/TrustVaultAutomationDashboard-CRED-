@@ -8,54 +8,53 @@ body {
 
 @layer base {
   :root {
-    --background: 220 60% 97%; /* Pale Cool White-Blue */
-    --foreground: 220 15% 25%; /* Dark Grayish Blue */
+    --background: 220 30% 8%; /* Deep Dark Blue */
+    --foreground: 190 100% 95%; /* Light Cyanish White */
 
-    --card: 220 40% 99%;    /* Very Light Cool White (almost pure white) */
-    --card-foreground: 220 15% 30%; /* Darker Grayish Blue for card text */
+    --card: 220 30% 12%;    /* Slightly Lighter Dark Blue for Cards */
+    --card-foreground: 190 80% 90%; /* Light Cyanish text for cards */
 
-    --popover: 220 40% 99%;
-    --popover-foreground: 220 15% 30%;
+    --popover: 220 25% 10%; /* Dark Popover */
+    --popover-foreground: 190 80% 90%;
 
-    --primary: 350 90% 60%;  /* Vibrant Pinkish-Red */
+    --primary: 330 100% 60%;  /* Neon Pink */
     --primary-foreground: 0 0% 100%; /* White */
 
-    --secondary: 145 65% 48%; /* Vibrant Green */
+    --secondary: 270 100% 65%; /* Neon Purple */
     --secondary-foreground: 0 0% 100%; /* White */
 
-    --muted: 220 25% 88%; /* Softer Light Grey */
-    --muted-foreground: 220 10% 50%; /* Medium Grayish Blue */
+    --muted: 220 15% 25%; /* Dark Muted Tone */
+    --muted-foreground: 220 15% 65%; /* Lighter Muted Foreground */
 
-    --accent: 210 90% 60%;   /* Vibrant Blue */
-    --accent-foreground: 0 0% 100%; /* White */
+    --accent: 180 100% 50%;   /* Neon Cyan */
+    --accent-foreground: 220 30% 5%; /* Dark text for contrast on cyan buttons */
 
-    --destructive: 0 80% 55%; /* Standard Red */
+    --destructive: 0 90% 60%; /* Vibrant Red */
     --destructive-foreground: 0 0% 100%;
 
     --warning: 35 100% 55%; /* Vibrant Orange */
-    --warning-foreground: 35 100% 20%; /* Dark orange for text on warning background, or use directly for text */
+    --warning-foreground: 0 0% 100%;
     
-    --border: 220 20% 85%;  /* Softer Grey Border */
-    --input: 220 30% 94%;   /* Light Input Background */
-    --ring: 210 90% 60%;    /* Blue Ring, matches accent */
+    --border: 200 100% 50%;  /* Neon Cyan/Blue border */
+    --input: 220 20% 15%;   /* Dark Input Background */
+    --ring: 180 100% 55%;    /* Neon Cyan Ring for focus */
 
-    --radius: 0.85rem; /* Increased for softer corners */
+    --radius: 0.75rem;
 
-    --chart-1: 350 90% 60%; /* Primary - Pinkish-Red */
-    --chart-2: 210 90% 60%; /* Accent - Blue */
-    --chart-3: 145 65% 48%; /* Secondary - Green */
-    --chart-4: 35 100% 55%; /* Warning - Orange */
-    --chart-5: 260 85% 65%; /* Vibrant Purple */
+    --chart-1: 330 100% 60%; /* Neon Pink */
+    --chart-2: 180 100% 50%; /* Neon Cyan */
+    --chart-3: 145 80% 55%; /* Neon Green */
+    --chart-4: 35 100% 55%; /* Neon Orange */
+    --chart-5: 270 100% 65%; /* Neon Purple */
 
-    /* Sidebar variables can be adjusted if a sidebar is introduced, for now align with main theme */
-    --sidebar-background: 220 50% 98%;
-    --sidebar-foreground: 220 15% 25%;
-    --sidebar-primary: 350 90% 60%;
+    --sidebar-background: 220 30% 10%; /* Slightly different dark for sidebar */
+    --sidebar-foreground: 190 100% 95%;
+    --sidebar-primary: 330 100% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 90% 60%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 20% 85%;
-    --sidebar-ring: 210 90% 60%;
+    --sidebar-accent: 180 100% 50%;
+    --sidebar-accent-foreground: 220 30% 5%;
+    --sidebar-border: 180 100% 50%;
+    --sidebar-ring: 180 100% 55%;
   }
 }
 
@@ -66,34 +65,127 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  .dark {
+    /* All variables are already defined for a dark theme by default in :root */
+  }
 }
 
-/* Custom pulse animation for RiskPulseIndicator */
-/* Low risk pulse (using Accent - Blue) */
-@keyframes pulse-low {
-  0%, 100% { box-shadow: 0 0 3px hsl(var(--accent)), 0 0 6px hsl(var(--accent)), 0 0 9px hsl(var(--accent)); opacity: 1; }
-  50% { box-shadow: 0 0 6px hsl(var(--accent)), 0 0 12px hsl(var(--accent)), 0 0 18px hsl(var(--accent)); opacity: 0.7; }
+/* Neon Glow Effects */
+.neon-glow-primary {
+  box-shadow: 0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary)), 0 0 15px hsl(var(--primary)), inset 0 0 3px hsl(var(--primary) / 0.5);
 }
-/* Medium risk pulse (using Warning - Orange) */
-@keyframes pulse-warning { /* Renamed from pulse-medium to reflect color source */
-  0%, 100% { box-shadow: 0 0 4px hsl(var(--warning)), 0 0 8px hsl(var(--warning)), 0 0 12px hsl(var(--warning)); opacity: 1; }
-  50% { box-shadow: 0 0 8px hsl(var(--warning)), 0 0 16px hsl(var(--warning)), 0 0 24px hsl(var(--warning)); opacity: 0.7; }
+.neon-glow-accent {
+  box-shadow: 0 0 5px hsl(var(--accent)), 0 0 10px hsl(var(--accent)), 0 0 15px hsl(var(--accent)), inset 0 0 3px hsl(var(--accent) / 0.5);
 }
-/* High risk pulse (using Primary - Pinkish-Red) */
-@keyframes pulse-high {
-  0%, 100% { box-shadow: 0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary)), 0 0 15px hsl(var(--primary)); opacity: 1; }
-  50% { box-shadow: 0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary)), 0 0 30px hsl(var(--primary)); opacity: 0.7; }
+.neon-glow-secondary {
+  box-shadow: 0 0 5px hsl(var(--secondary)), 0 0 10px hsl(var(--secondary)), 0 0 15px hsl(var(--secondary)), inset 0 0 3px hsl(var(--secondary) / 0.5);
+}
+.neon-glow-warning {
+  box-shadow: 0 0 5px hsl(var(--warning)), 0 0 10px hsl(var(--warning)), 0 0 15px hsl(var(--warning)), inset 0 0 3px hsl(var(--warning) / 0.5);
+}
+.neon-glow-destructive {
+  box-shadow: 0 0 5px hsl(var(--destructive)), 0 0 10px hsl(var(--destructive)), 0 0 15px hsl(var(--destructive)), inset 0 0 3px hsl(var(--destructive) / 0.5);
+}
+
+/* Tilted Card Styling */
+.tilted-card {
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  transform: rotate(-3deg);
+}
+
+.tilted-card:hover {
+  transform: rotate(-1.5deg) scale(1.03);
+}
+
+.tilted-card-content {
+  transform: rotate(3deg); /* Counter-rotate content */
+}
+
+.tilted-card:hover .tilted-card-content {
+  transform: rotate(1.5deg); /* Adjust counter-rotation on hover */
+}
+
+
+/* Custom pulse animation for RiskPulseIndicator with Neon Glows */
+@keyframes pulse-low-neon {
+  0%, 100% { box-shadow: 0 0 8px hsl(var(--accent)), 0 0 16px hsl(var(--accent)), 0 0 24px hsl(var(--accent)); opacity: 1; }
+  50% { box-shadow: 0 0 12px hsl(var(--accent)), 0 0 24px hsl(var(--accent)), 0 0 36px hsl(var(--accent)); opacity: 0.7; }
+}
+@keyframes pulse-warning-neon {
+  0%, 100% { box-shadow: 0 0 8px hsl(var(--warning)), 0 0 16px hsl(var(--warning)), 0 0 24px hsl(var(--warning)); opacity: 1; }
+  50% { box-shadow: 0 0 12px hsl(var(--warning)), 0 0 24px hsl(var(--warning)), 0 0 36px hsl(var(--warning)); opacity: 0.7; }
+}
+@keyframes pulse-high-neon {
+  0%, 100% { box-shadow: 0 0 8px hsl(var(--primary)), 0 0 16px hsl(var(--primary)), 0 0 24px hsl(var(--primary)); opacity: 1; }
+  50% { box-shadow: 0 0 12px hsl(var(--primary)), 0 0 24px hsl(var(--primary)), 0 0 36px hsl(var(--primary)); opacity: 0.7; }
 }
 
 .risk-pulse-low {
-  background-color: hsl(var(--accent) / 0.5);
-  animation: pulse-low 2s infinite ease-in-out;
+  background-color: hsl(var(--accent) / 0.3);
+  border: 1px solid hsl(var(--accent));
+  animation: pulse-low-neon 2s infinite ease-in-out;
 }
-.risk-pulse-medium { /* Updated to use warning color and animation */
-  background-color: hsl(var(--warning) / 0.5); 
-  animation: pulse-warning 1.5s infinite ease-in-out;
+.risk-pulse-medium {
+  background-color: hsl(var(--warning) / 0.3);
+  border: 1px solid hsl(var(--warning));
+  animation: pulse-warning-neon 1.5s infinite ease-in-out;
 }
 .risk-pulse-high {
-  background-color: hsl(var(--primary) / 0.5);
-  animation: pulse-high 1s infinite ease-in-out;
+  background-color: hsl(var(--primary) / 0.3);
+  border: 1px solid hsl(var(--primary));
+  animation: pulse-high-neon 1s infinite ease-in-out;
+}
+
+/* Styling for ShadCN components in dark mode */
+/* Inputs */
+.dark .input, .dark .textarea {
+  @apply bg-input border-border placeholder:text-muted-foreground focus-visible:ring-ring;
+}
+
+/* Buttons */
+.dark .button-primary {
+  @apply bg-primary text-primary-foreground hover:bg-primary/80;
+  box-shadow: 0 0 3px hsl(var(--primary)), 0 0 6px hsl(var(--primary)/0.7);
+  transition: box-shadow 0.3s ease;
+}
+.dark .button-primary:hover {
+  box-shadow: 0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary)/0.7), 0 0 15px hsl(var(--primary)/0.5);
+}
+
+.dark .button-secondary {
+   @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+   box-shadow: 0 0 3px hsl(var(--secondary)), 0 0 6px hsl(var(--secondary)/0.7);
+   transition: box-shadow 0.3s ease;
+}
+.dark .button-secondary:hover {
+  box-shadow: 0 0 5px hsl(var(--secondary)), 0 0 10px hsl(var(--secondary)/0.7), 0 0 15px hsl(var(--secondary)/0.5);
+}
+
+.dark .button-accent {
+   @apply bg-accent text-accent-foreground hover:bg-accent/80;
+   box-shadow: 0 0 3px hsl(var(--accent)), 0 0 6px hsl(var(--accent)/0.7);
+   transition: box-shadow 0.3s ease;
+}
+.dark .button-accent:hover {
+  box-shadow: 0 0 5px hsl(var(--accent)), 0 0 10px hsl(var(--accent)/0.7), 0 0 15px hsl(var(--accent)/0.5);
+}
+
+/* Ensure card base styles align with neon theme */
+.dark .card {
+  @apply bg-card text-card-foreground border-transparent; /* Remove default border, glow will define edges */
+}
+
+/* Specific glow for FraudDetectionTool Analyze Button */
+.analyze-button {
+  @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  box-shadow: 0 0 4px hsl(var(--primary)), 0 0 8px hsl(var(--primary)/0.8), 0 0 12px hsl(var(--primary)/0.6);
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.analyze-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 6px hsl(var(--primary)), 0 0 12px hsl(var(--primary)/0.8), 0 0 18px hsl(var(--primary)/0.6);
+}
+.analyze-button:disabled {
+  box-shadow: none;
+  transform: none;
 }
