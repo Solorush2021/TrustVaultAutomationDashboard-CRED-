@@ -10,15 +10,16 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
       {...props} // className from header will set width/height
     >
       <text
-        x="0" 
+        x="0"
         y="15" // Vertically centered if dominant-baseline is middle
         fontFamily="var(--font-geist-sans), Arial, sans-serif"
         fontSize="20" // Font size relative to viewBox units
         fontWeight="bold"
-        fill="hsl(var(--primary))" 
-        letterSpacing="0.5" 
+        fill="hsl(var(--primary))"
+        letterSpacing="0.5"
         dominantBaseline="middle"
         textAnchor="start"
+        className="logo-text-animated" // Added class for animation
       >
         TrustVault
       </text>
