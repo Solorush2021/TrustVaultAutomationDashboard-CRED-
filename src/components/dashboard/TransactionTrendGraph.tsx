@@ -25,15 +25,15 @@ const initialChartData: ChartDataPoint[] = [
   { name: 'Jun', value: 0 },
 ];
 
-// Updated chartConfig to use new neon theme colors directly
+// ChartConfig colors will use HSL variables from the theme
 const chartConfig = {
   transactions: {
     label: 'Transactions',
-    color: 'hsl(var(--primary))', // Neon Pink
+    color: 'hsl(var(--primary))', 
   },
-  volume: { // Assuming 'value' key maps to volume or a primary metric
+  volume: { 
     label: 'Volume',
-    color: 'hsl(var(--accent))', // Neon Cyan
+    color: 'hsl(var(--accent))', 
   }
 } satisfies ChartConfig;
 
@@ -59,6 +59,7 @@ export function TransactionTrendGraph() {
 
 
   return (
+    // neon-glow-accent class might not be defined in reverted globals.css
     <Card className={cn("shadow-xl border-transparent neon-glow-accent h-full")}>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-2xl">
@@ -87,7 +88,7 @@ export function TransactionTrendGraph() {
                 type="monotone"
                 dataKey="value"
                 strokeWidth={3}
-                stroke="var(--color-transactions)" // Uses 'transactions' from chartConfig -> Neon Pink
+                stroke="var(--color-transactions)" 
                 dot={{
                   fill: "var(--color-transactions)",
                   r: 5,

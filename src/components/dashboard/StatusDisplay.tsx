@@ -31,6 +31,7 @@ export function StatusDisplay() {
   const activeConfig = statusConfig[currentStatus];
 
   return (
+    // activeConfig.glowClass (neon-glow-*) might not be defined in reverted globals.css
     <Card className={cn("shadow-lg border-transparent", activeConfig.glowClass)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium text-foreground/80">Network Integrity</CardTitle>

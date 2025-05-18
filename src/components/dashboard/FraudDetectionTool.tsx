@@ -77,6 +77,7 @@ export function FraudDetectionTool() {
   };
 
   return (
+    // neon-glow-secondary and border-secondary/50 might not be defined in reverted globals.css
     <Card className="shadow-xl neon-glow-secondary border-secondary/50">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-2xl">
@@ -107,6 +108,7 @@ export function FraudDetectionTool() {
             />
           </CardContent>
           <CardFooter>
+            {/* analyze-button class might not be defined in reverted globals.css */}
             <Button type="submit" disabled={isLoading} className="analyze-button w-full text-lg py-3">
               {isLoading ? (
                 <>
@@ -127,11 +129,12 @@ export function FraudDetectionTool() {
         <CardContent className="mt-4">
           <Alert 
             variant={analysisResult.isSuspicious ? "destructive" : "default"} 
+            // neon-glow classes might not be defined in reverted globals.css
             className={cn(
               "border-2",
               analysisResult.isSuspicious 
               ? "border-destructive/70 text-destructive neon-glow-destructive bg-destructive/10" 
-              : "border-chart-3/70 text-chart-3 neon-glow-secondary bg-chart-3/10" // Using chart-3 (green) for non-suspicious
+              : "border-chart-3/70 text-chart-3 neon-glow-secondary bg-chart-3/10" 
             )}
           >
              <AlertTitle className="font-bold flex items-center gap-2 text-lg">

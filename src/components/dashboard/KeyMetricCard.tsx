@@ -12,16 +12,19 @@ interface KeyMetricCardProps {
   description?: string;
   className?: string;
   valueClassName?: string;
-  glowEffect?: 'primary' | 'accent' | 'secondary' | 'warning' | 'destructive' | 'none';
+  glowEffect?: 'primary' | 'accent' | 'secondary' | 'warning' | 'destructive' | 'none'; // This prop remains, but styles might not be defined in reverted CSS
 }
 
 export function KeyMetricCard({ title, value, icon, description, className, valueClassName, glowEffect = 'accent' }: KeyMetricCardProps) {
-  const glowClass = glowEffect !== 'none' ? `neon-glow-${glowEffect}` : '';
+  // The glowClass might be empty if neon-glow-* classes are not in the reverted globals.css
+  const glowClass = glowEffect !== 'none' && glowEffect ? `neon-glow-${glowEffect}` : '';
   
   return (
-    <div className={cn("tilted-card", className)}>
+    // The tilted-card class might not be defined in the reverted globals.css
+    <div className={cn("tilted-card", className)}> 
       <Card className={cn("shadow-lg transition-all duration-300 ease-out", glowClass, "hover:shadow-[0_0_25px_theme(colors.accent/70)]")}>
-        <div className="tilted-card-content">
+        {/* The tilted-card-content class might not be defined in the reverted globals.css */}
+        <div className="tilted-card-content"> 
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-foreground/80">{title}</CardTitle>
             <span className="text-primary">{icon}</span>

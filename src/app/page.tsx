@@ -9,7 +9,7 @@ import { RiskPulseIndicator } from '@/components/dashboard/RiskPulseIndicator';
 import { TransactionTrendGraph } from '@/components/dashboard/TransactionTrendGraph';
 import { FraudDetectionTool } from '@/components/dashboard/FraudDetectionTool';
 import { Activity, Percent, AlertTriangle, TimerIcon } from 'lucide-react';
-import { Card as ShadcnCard, CardHeader as ShadcnCardHeader, CardContent as ShadcnCardContent } from '@/components/ui/card'; // Renamed to avoid conflict
+import { Card as ShadcnCard, CardHeader as ShadcnCardHeader, CardContent as ShadcnCardContent } from '@/components/ui/card';
 
 interface Metrics {
   totalTransactions: number;
@@ -54,7 +54,7 @@ export default function DashboardPage() {
                 value={metrics.totalTransactions.toLocaleString()}
                 icon={<Activity size={28} />}
                 description="All processed transactions"
-                glowEffect="primary"
+                glowEffect="primary" // This prop will remain, but styling might not apply
               />
               <KeyMetricCard
                 title="Success Rate"
@@ -62,7 +62,7 @@ export default function DashboardPage() {
                 icon={<Percent size={28} />}
                 description="Successful transactions"
                 valueClassName={metrics.successRate > 98 ? 'text-[hsl(var(--chart-3))]' : metrics.successRate > 95 ? 'text-warning' : 'text-destructive'}
-                glowEffect={metrics.successRate > 98 ? 'secondary' : metrics.successRate > 95 ? 'warning' : 'destructive'}
+                glowEffect={metrics.successRate > 98 ? 'secondary' : metrics.successRate > 95 ? 'warning' : 'destructive'} // This prop will remain
               />
               <KeyMetricCard
                 title="High-Risk Alerts"
@@ -70,7 +70,7 @@ export default function DashboardPage() {
                 icon={<AlertTriangle size={28} />}
                 description="Flagged for review"
                 valueClassName={metrics.highRiskCount > 50 ? 'text-destructive' : metrics.highRiskCount > 20 ? 'text-warning' : 'text-[hsl(var(--chart-3))]'}
-                glowEffect={metrics.highRiskCount > 50 ? 'destructive' : metrics.highRiskCount > 20 ? 'warning' : 'accent'}
+                glowEffect={metrics.highRiskCount > 50 ? 'destructive' : metrics.highRiskCount > 20 ? 'warning' : 'accent'} // This prop will remain
               />
               <KeyMetricCard
                 title="Avg. Response Time"
@@ -78,13 +78,14 @@ export default function DashboardPage() {
                 icon={<TimerIcon size={28} />}
                 description="System processing speed"
                 valueClassName={metrics.avgResponseTime < 150 ? 'text-[hsl(var(--chart-3))]' : metrics.avgResponseTime < 250 ? 'text-warning' : 'text-destructive'}
-                glowEffect={metrics.avgResponseTime < 150 ? 'secondary' : metrics.avgResponseTime < 250 ? 'warning' : 'destructive'}
+                glowEffect={metrics.avgResponseTime < 150 ? 'secondary' : metrics.avgResponseTime < 250 ? 'warning' : 'destructive'} // This prop will remain
               />
             </div>
           ) : (
              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className="tilted-card">
+                  // tilted-card and neon-glow-accent classes might not be defined in reverted globals.css
+                  <div key={i} className="tilted-card"> 
                     <ShadcnCard className="shadow-lg neon-glow-accent animate-pulse">
                       <div className="tilted-card-content">
                         <ShadcnCardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
