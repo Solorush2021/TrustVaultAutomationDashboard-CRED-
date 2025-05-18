@@ -94,7 +94,7 @@ export function FraudDetectionTool() {
                   <FormControl>
                     <Textarea
                       placeholder={`Enter transaction data in JSON format. Example:\n${JSON.stringify(exampleTransaction, null, 2)}`}
-                      className="min-h-[150px] font-mono text-xs bg-background/70 border-accent/30 focus:border-accent"
+                      className="min-h-[150px] font-mono text-xs bg-input focus:border-accent" /* Updated bg-background/70 to bg-input for theme consistency */
                       {...field}
                     />
                   </FormControl>
@@ -122,7 +122,14 @@ export function FraudDetectionTool() {
       </Form>
       {analysisResult && (
         <CardContent>
-          <Alert variant={analysisResult.isSuspicious ? "destructive" : "default"} className={analysisResult.isSuspicious ? "border-destructive/50 text-destructive" : "border-green-500/50 text-green-400"}>
+          <Alert 
+            variant={analysisResult.isSuspicious ? "destructive" : "default"} 
+            className={
+              analysisResult.isSuspicious 
+              ? "border-destructive/50 text-destructive" 
+              : "border-secondary/50 text-secondary" /* Updated green to secondary */
+            }
+          >
              <AlertTitle className="font-bold flex items-center gap-2">
               {analysisResult.isSuspicious ? 'Suspicious Transaction' : 'Transaction Appears Normal'}
             </AlertTitle>

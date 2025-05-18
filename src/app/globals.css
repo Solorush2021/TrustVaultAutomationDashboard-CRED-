@@ -8,54 +8,55 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 10%; /* Dark Gray #1A1A1A */
-    --foreground: 0 0% 88%; /* Light Gray #E0E0E0 */
+    --background: 220 60% 97%; /* Pale Cool White-Blue */
+    --foreground: 220 15% 25%; /* Dark Grayish Blue */
 
-    --card: 0 0% 12%; /* Slightly Lighter Dark Gray #1F1F1F */
-    --card-foreground: 0 0% 88%;
+    --card: 220 40% 99%;    /* Very Light Cool White (almost pure white) */
+    --card-foreground: 220 15% 30%; /* Darker Grayish Blue for card text */
 
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 88%;
+    --popover: 220 40% 99%;
+    --popover-foreground: 220 15% 30%;
 
-    --primary: 300 100% 50%; /* Neon Magenta #FF00FF */
+    --primary: 350 90% 60%;  /* Vibrant Pinkish-Red */
     --primary-foreground: 0 0% 100%; /* White */
 
-    --secondary: 180 100% 35%; /* Darker Cyan */
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 145 65% 48%; /* Vibrant Green */
+    --secondary-foreground: 0 0% 100%; /* White */
 
-    --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 55%;
+    --muted: 220 25% 88%; /* Softer Light Grey */
+    --muted-foreground: 220 10% 50%; /* Medium Grayish Blue */
 
-    --accent: 180 100% 50%; /* Cyan #00FFFF */
-    --accent-foreground: 0 0% 5%; /* Dark Gray/Black for text on cyan */
+    --accent: 210 90% 60%;   /* Vibrant Blue */
+    --accent-foreground: 0 0% 100%; /* White */
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 80% 55%; /* Standard Red */
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 20%; /* Subtle dark border */
-    --input: 0 0% 16%;
-    --ring: 180 100% 50%; /* Cyan for focus rings */
+    --warning: 35 100% 55%; /* Vibrant Orange */
+    --warning-foreground: 35 100% 20%; /* Dark orange for text on warning background, or use directly for text */
+    
+    --border: 220 20% 85%;  /* Softer Grey Border */
+    --input: 220 30% 94%;   /* Light Input Background */
+    --ring: 210 90% 60%;    /* Blue Ring, matches accent */
 
-    --radius: 0.5rem;
+    --radius: 0.85rem; /* Increased for softer corners */
 
-    --chart-1: 300 100% 50%; /* Neon Magenta */
-    --chart-2: 180 100% 50%; /* Cyan */
-    --chart-3: 300 80% 65%;  /* Lighter Magenta */
-    --chart-4: 180 80% 65%;  /* Lighter Cyan */
-    --chart-5: 210 100% 50%; /* Neon Blue */
+    --chart-1: 350 90% 60%; /* Primary - Pinkish-Red */
+    --chart-2: 210 90% 60%; /* Accent - Blue */
+    --chart-3: 145 65% 48%; /* Secondary - Green */
+    --chart-4: 35 100% 55%; /* Warning - Orange */
+    --chart-5: 260 85% 65%; /* Vibrant Purple */
 
-    --sidebar-background: 0 0% 10%;
-    --sidebar-foreground: 0 0% 88%;
-    --sidebar-primary: 300 100% 50%;
+    /* Sidebar variables can be adjusted if a sidebar is introduced, for now align with main theme */
+    --sidebar-background: 220 50% 98%;
+    --sidebar-foreground: 220 15% 25%;
+    --sidebar-primary: 350 90% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 180 100% 50%;
-    --sidebar-accent-foreground: 0 0% 5%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 180 100% 50%;
+    --sidebar-accent: 210 90% 60%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 20% 85%;
+    --sidebar-ring: 210 90% 60%;
   }
-
-  /* Remove .dark selector as dark is default now */
-  /* .dark { ... } */
 }
 
 @layer base {
@@ -68,14 +69,17 @@ body {
 }
 
 /* Custom pulse animation for RiskPulseIndicator */
+/* Low risk pulse (using Accent - Blue) */
 @keyframes pulse-low {
   0%, 100% { box-shadow: 0 0 3px hsl(var(--accent)), 0 0 6px hsl(var(--accent)), 0 0 9px hsl(var(--accent)); opacity: 1; }
   50% { box-shadow: 0 0 6px hsl(var(--accent)), 0 0 12px hsl(var(--accent)), 0 0 18px hsl(var(--accent)); opacity: 0.7; }
 }
-@keyframes pulse-medium {
-  0%, 100% { box-shadow: 0 0 4px hsl(48, 100%, 50%), 0 0 8px hsl(48, 100%, 50%), 0 0 12px hsl(48, 100%, 50%); opacity: 1; } /* Neon Yellow */
-  50% { box-shadow: 0 0 8px hsl(48, 100%, 50%), 0 0 16px hsl(48, 100%, 50%), 0 0 24px hsl(48, 100%, 50%); opacity: 0.7; }
+/* Medium risk pulse (using Warning - Orange) */
+@keyframes pulse-warning { /* Renamed from pulse-medium to reflect color source */
+  0%, 100% { box-shadow: 0 0 4px hsl(var(--warning)), 0 0 8px hsl(var(--warning)), 0 0 12px hsl(var(--warning)); opacity: 1; }
+  50% { box-shadow: 0 0 8px hsl(var(--warning)), 0 0 16px hsl(var(--warning)), 0 0 24px hsl(var(--warning)); opacity: 0.7; }
 }
+/* High risk pulse (using Primary - Pinkish-Red) */
 @keyframes pulse-high {
   0%, 100% { box-shadow: 0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary)), 0 0 15px hsl(var(--primary)); opacity: 1; }
   50% { box-shadow: 0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary)), 0 0 30px hsl(var(--primary)); opacity: 0.7; }
@@ -85,9 +89,9 @@ body {
   background-color: hsl(var(--accent) / 0.5);
   animation: pulse-low 2s infinite ease-in-out;
 }
-.risk-pulse-medium {
-  background-color: hsl(48 100% 50% / 0.5); /* Neon Yellow */
-  animation: pulse-medium 1.5s infinite ease-in-out;
+.risk-pulse-medium { /* Updated to use warning color and animation */
+  background-color: hsl(var(--warning) / 0.5); 
+  animation: pulse-warning 1.5s infinite ease-in-out;
 }
 .risk-pulse-high {
   background-color: hsl(var(--primary) / 0.5);

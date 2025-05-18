@@ -6,10 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle2, XCircle, Loader2, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const statusConfig: Record<TransactionStatus, { icon: React.ElementType; color: string; text: string }> = {
-  success: { icon: CheckCircle2, color: 'text-green-400', text: 'Transactions: Nominal' },
-  failed: { icon: XCircle, color: 'text-red-400', text: 'Transactions: Critical' },
-  pending: { icon: Loader2, color: 'text-yellow-400', text: 'Transactions: Pending' },
+// Updated to use theme colors
+const statusConfig: Record<TransactionStatus, { icon: React.ElementType; colorClass: string; text: string }> = {
+  success: { icon: CheckCircle2, colorClass: 'text-secondary', text: 'Transactions: Nominal' }, // Green -> Secondary
+  failed: { icon: XCircle, colorClass: 'text-destructive', text: 'Transactions: Critical' }, // Red -> Destructive
+  pending: { icon: Loader2, colorClass: 'text-[hsl(var(--warning))]', text: 'Transactions: Pending' }, // Yellow -> Warning
 };
 
 export function StatusDisplay() {
@@ -28,6 +29,7 @@ export function StatusDisplay() {
   }, []);
 
   const IconComponent = statusConfig[currentStatus].icon;
+  const activeConfig = statusConfig[currentStatus];
 
   return (
     <Card className="shadow-lg border-primary/20">
@@ -37,9 +39,9 @@ export function StatusDisplay() {
       </CardHeader>
       <CardContent>
         <div className="flex items-center space-x-2">
-          <IconComponent className={cn("h-8 w-8", statusConfig[currentStatus].color, currentStatus === 'pending' && 'animate-spin')} />
-          <span className={cn("text-xl font-semibold", statusConfig[currentStatus].color)}>
-            {statusConfig[currentStatus].text}
+          <IconComponent className={cn("h-8 w-8", activeConfig.colorClass, currentStatus === 'pending' && 'animate-spin')} />
+          <span className={cn("text-xl font-semibold", activeConfig.colorClass)}>
+            {activeConfig.text}
           </span>
         </div>
         <p className="text-xs text-muted-foreground pt-1">Real-time operational status.</p>

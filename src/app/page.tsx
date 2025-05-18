@@ -8,7 +8,7 @@ import { RiskPulseIndicator } from '@/components/dashboard/RiskPulseIndicator';
 import { TransactionTrendGraph } from '@/components/dashboard/TransactionTrendGraph';
 import { FraudDetectionTool } from '@/components/dashboard/FraudDetectionTool';
 import { Activity, TrendingUp, AlertTriangle, TimerIcon, Percent } from 'lucide-react';
-import { Card, CardHeader, CardContent } from '@/components/ui/card'; // Added import
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
 interface Metrics {
   totalTransactions: number;
@@ -62,21 +62,21 @@ export default function DashboardPage() {
                 value={`${metrics.successRate.toFixed(1)}%`}
                 icon={<Percent size={24} />}
                 description="Successful transactions"
-                valueClassName={metrics.successRate > 98 ? 'text-green-400' : metrics.successRate > 95 ? 'text-yellow-400' : 'text-red-400'}
+                valueClassName={metrics.successRate > 98 ? 'text-secondary' : metrics.successRate > 95 ? 'text-[hsl(var(--warning))]' : 'text-destructive'}
               />
               <KeyMetricCard
                 title="High-Risk Alerts"
                 value={metrics.highRiskCount.toLocaleString()}
                 icon={<AlertTriangle size={24} />}
                 description="Flagged for review"
-                 valueClassName={metrics.highRiskCount > 50 ? 'text-red-400' : metrics.highRiskCount > 20 ? 'text-yellow-400' : 'text-green-400'}
+                 valueClassName={metrics.highRiskCount > 50 ? 'text-destructive' : metrics.highRiskCount > 20 ? 'text-[hsl(var(--warning))]' : 'text-secondary'}
               />
               <KeyMetricCard
                 title="Avg. Response Time"
                 value={`${metrics.avgResponseTime}ms`}
                 icon={<TimerIcon size={24} />}
                 description="System processing speed"
-                valueClassName={metrics.avgResponseTime < 150 ? 'text-green-400' : metrics.avgResponseTime < 250 ? 'text-yellow-400' : 'text-red-400'}
+                valueClassName={metrics.avgResponseTime < 150 ? 'text-secondary' : metrics.avgResponseTime < 250 ? 'text-[hsl(var(--warning))]' : 'text-destructive'}
               />
             </div>
           ) : (
